@@ -1,4 +1,5 @@
 import folium
+import pandas
 map = folium.Map(location=[55.65310221424613, 12.142294332895851], zoom_start=10, tiles="Stamen Terrain")
 mapwToner = folium.Map(location=[55.65310221424613, 12.142294332895851], zoom_start=10, tiles="Stamen toner")
 mapwColor = folium.Map(location=[55.65310221424613, 12.142294332895851], zoom_start=10, tiles="Stamen Water Color")
@@ -40,3 +41,21 @@ for coordinates in [[55.65310221424613, 12.142294332895851],[55.68376107342263, 
 mapFor.add_child(fgfor)
 
 map.save("MapFor.html")
+
+
+#Creating Volcano map
+VOLmap = folium.Map(location=[55.65310221424613, 12.142294332895851], zoom_start=10, tiles="Stamen Terrain")
+
+#reading from txt file
+dataVOL = pandas.read_csv("Volcanoes.txt")
+
+#for coordinates in dataVOL
+lon = list(dataVOL["LON"])
+lat = list(dataVOL["LAT"])
+
+fgVOL = folium.FeatureGroup(name="Volcano Map")
+for lt, ln in zip(lat, lon):
+    fgVOL.add_child(folium.Marker(location=[lt, ln], popup="Hi I am a volcano", icon=folium.Icon(color='blue')))
+
+VOLmap.add_child(fgVOL)
+VOLmap.save("VOLmap.html")
