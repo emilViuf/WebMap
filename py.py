@@ -21,10 +21,22 @@ mapwToner.add_child(fgT)
 mapwColor.add_child(fgC)
 
 
-
 #do -> help(folium.map) ... to see what you can pass to it
 # folium makes a map by converting python into js & html/css.
 map.save("Map1.html")
 mapwToner.save("Map2.html")
 mapwColor.save("Map3.html")
 # ^ This creates the html file
+
+
+#doing it with for loop instead
+mapFor = folium.Map(location=[55.65310221424613, 12.142294332895851], zoom_start=10, tiles="Stamen Terrain")
+
+fgfor = folium.FeatureGroup(name="My Map")
+
+for coordinates in [[55.65310221424613, 12.142294332895851],[55.68376107342263, 12.514369497178908]]:
+    fg.add_child(folium.Marker(location=coordinates, popup="This is a University", icon=folium.Icon(color='green')))
+
+mapFor.add_child(fgfor)
+
+map.save("MapFor.html")
