@@ -44,7 +44,7 @@ map.save("MapFor.html")
 
 
 #Creating Volcano map
-VOLmap = folium.Map(location=[55.65310221424613, 12.142294332895851], zoom_start=10, tiles="Stamen Terrain")
+VOLmap = folium.Map(location=[41.85022545174429, -118.2853730951305], zoom_start=7, tiles="Stamen Terrain")
 
 #reading from txt file
 dataVOL = pandas.read_csv("Volcanoes.txt")
@@ -52,10 +52,16 @@ dataVOL = pandas.read_csv("Volcanoes.txt")
 #for coordinates in dataVOL
 lon = list(dataVOL["LON"])
 lat = list(dataVOL["LAT"])
+name = list(dataVOL["NAME"])
+elev = list(dataVOL["ELEV"])
 
+#maybe go back and add html to popups?
+
+#FeatureGroup / Child
 fgVOL = folium.FeatureGroup(name="Volcano Map")
-for lt, ln in zip(lat, lon):
-    fgVOL.add_child(folium.Marker(location=[lt, ln], popup="Hi I am a volcano", icon=folium.Icon(color='blue')))
-
+for lt, ln, nm, el in zip(lat, lon, name, elev):
+    fgVOL.add_child(folium.Marker(location=[lt, ln], popup=["Name:" + str(nm) + "\n" + "Elevation:" + str(el) + " m"], icon=folium.Icon(color='blue')))
 VOLmap.add_child(fgVOL)
+
+#Create map
 VOLmap.save("VOLmap.html")
